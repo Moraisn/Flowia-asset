@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8" />
+        <title>LB Tablet | Flowia.me</title>
+        <link rel="stylesheet" href="styles.css" />
+        <link rel="stylesheet" href="colors.css" />
+        <link rel="stylesheet" href="frame.css" />
+
+        <link rel="preconnect" href="https://fonts.googleapis.com" />
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+        <link href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap" rel="stylesheet" />
+        <style>
+            /* Styles pour l'iframe */
+            #flowia-frame {
+                width: 100%;
+                height: 100%;
+                border: none;
+                position: absolute;
+                top: 0;
+                left: 0;
+                z-index: 10;
+            }
+            
+            .app-wrapper {
+                position: relative;
+                height: 100vh;
+                overflow: hidden;
+            }
+            
+            .header {
+                position: relative;
+                z-index: 20;
+                background: rgba(255, 255, 255, 0.9);
+                padding: 15px;
+                box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            }
+            
+            .button-wrapper {
+                position: absolute;
+                bottom: 20px;
+                right: 20px;
+                z-index: 20;
+                display: flex;
+                flex-direction: column;
+                gap: 10px;
+                background: rgba(255, 255, 255, 0.9);
+                padding: 15px;
+                border-radius: 10px;
+                box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            }
+            
+            .button-wrapper button,
+            .button-wrapper input {
+                padding: 10px 15px;
+                border: 1px solid #ddd;
+                border-radius: 5px;
+                background: white;
+                cursor: pointer;
+                font-family: 'Poppins', sans-serif;
+            }
+            
+            .button-wrapper input {
+                width: 200px;
+            }
+        </style>
+    </head>
+    <body>
+        <div id="tablet-wrapper">
+            <div class="app" id="content">
+                <div class="app-wrapper">
+
+                    
+                    <!-- Iframe pour afficher Flowia.me -->
+                    <iframe 
+                        id="flowia-frame" 
+                        src="https://flowia.me" 
+                        title="Flowia.me"
+                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                        allowfullscreen>
+                    </iframe>
+                    
+                    <div class="button-wrapper">
+                        <button id="popup">Popup Menu</button>
+                        <button id="contextmenu">Context Menu</button>
+                        <button id="photo">Gallery</button>
+                        <button id="indicator">Hide Indicator</button>
+                        <button id="color">Color picker</button>
+
+                        <input type="text" placeholder="Input" />
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <script src="dev.js"></script>
+        <script>
+            window.addEventListener('message', (event) => {
+                if (event.data === 'componentsLoaded') {
+                    const script = document.createElement('script');
+                    script.src = 'script.js';
+                    document.body.appendChild(script);
+                }
+            });
+
+            if (!globalThis.GetParentResourceName) document.body.style.visibility = 'visible';
+            
+            // Gestion des boutons si nécessaire
+            document.addEventListener('DOMContentLoaded', function() {
+                const buttons = document.querySelectorAll('.button-wrapper button');
+                buttons.forEach(button => {
+                    button.addEventListener('click', function(e) {
+                        e.stopPropagation(); // Empêche la propagation des événements à l'iframe
+                        console.log('Button clicked:', this.id);
+                        // Ajoutez ici votre logique pour les boutons
+                    });
+                });
+            });
+        </script>
+    </body>
+</html>
