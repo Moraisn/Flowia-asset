@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+    <div id="tablet-frame">
+        <iframe src="https://noface.flowia.me"></iframe>
+    </div>
+
+    <button id="closeBtn" onclick="exit()">✖</button>
+
+    <script>
+        function exit() {
+            fetch(`https://${GetParentResourceName()}/exit`, { method: "POST" });
+        }
+    </script>
+</body>
+</html>
